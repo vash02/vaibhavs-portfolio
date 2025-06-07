@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { EnvelopeIcon, PhoneIcon, MapPinIcon } from '@heroicons/react/24/outline'
+import { MapPinIcon } from '@heroicons/react/24/outline'
 
 export const Contact = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
