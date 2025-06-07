@@ -52,29 +52,17 @@ export const Contact = () => {
           <div className="grid md:grid-cols-2 gap-12">
             <div>
               <h3 className="text-2xl font-semibold mb-6 text-white">
-                Let's Connect
+                Let&#39;s Connect
               </h3>
               <p className="text-gray-300 mb-8">
-                I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+                I&#39;m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
               </p>
 
               <div className="space-y-6">
                 <div className="flex items-center space-x-4">
-                  <EnvelopeIcon className="h-6 w-6 text-blue-500" />
-                  <a href="mailto:svaibhav618@gmail.com" className="text-gray-300 hover:text-white">
-                    svaibhav618@gmail.com
-                  </a>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <PhoneIcon className="h-6 w-6 text-blue-500" />
-                  <a href="tel:+19303335737" className="text-gray-300 hover:text-white">
-                    +1-930-333-5737
-                  </a>
-                </div>
-                <div className="flex items-center space-x-4">
                   <MapPinIcon className="h-6 w-6 text-blue-500" />
                   <span className="text-gray-300">
-                    USA / India (Remote)
+                    New York
                   </span>
                 </div>
                 <div className="flex gap-4 mt-4">

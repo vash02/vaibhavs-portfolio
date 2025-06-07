@@ -1,49 +1,81 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 
-const projects = [
-  {
-    title: 'Code-visplain Application',
-    period: 'Jan 2025 – Mar 2025',
-    description: [
-      'Developed a graph analysis + Retrieval Augmented Generation (RAG) based code repository visualizer leveraging LLaMA & networkx for component & parametric understanding of code components.',
-      'Implemented application using Flask, enabling seamless setup and deployment on local machine.'
-    ],
-    technologies: ['LLaMA', 'networkx', 'Flask', 'RAG'],
-    link: '#',
-  },
-  {
-    title: 'Croatia IAB Ads Classification Model',
-    period: 'Oct 2024 – Dec 2024',
-    description: [
-      'Designed a computationally efficient solution for a startup in Croatia in partnership with Indiana University to help them classify their ads into IAB categories.',
-      'Employing LLM generated embedding and vector similarity scoring for classification baselining of multilingual data for European languages and developing unsupervised scoring metrics for the classification.'
-    ],
-    technologies: ['LLM', 'Vector Similarity', 'Unsupervised Scoring'],
-    link: '#',
-  },
-  {
-    title: 'RL - GAN - Net',
-    period: 'Apr 2024 – Jun 2024',
-    description: [
-      'Orchestrated an RL agent-guided RL-GAN-Net pipeline to regenerate point cloud images from partial data inputs.',
-      'Designed and experimented with different Markovian environments and component architectures to minimize reconstruction error with lower compute usage.'
-    ],
-    technologies: ['RL', 'GAN', 'Markovian Environments'],
-    link: '#',
-  },
-]
+interface Project {
+  name: string;
+  description: string;
+  url: string;
+  stargazerCount: number;
+  forkCount: number;
+}
 
 export const Projects = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   })
+  const [projects, setProjects] = useState<Project[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchPinnedRepos = async () => {
+      try {
+        const response = await fetch('https://api.github.com/graphql', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+          },
+          body: JSON.stringify({
+            query: `
+              query {
+                user(login: "vash02") {
+                  pinnedItems(first: 6, types: REPOSITORY) {
+                    nodes {
+                      ... on Repository {
+                        name
+                        description
+                        url
+                        stargazerCount
+                        forkCount
+                      }
+                    }
+                  }
+                }
+              }
+            `,
+          }),
+        })
+
+        if (!response.ok) {
+          const errorData = await response.json()
+          console.error('GitHub API Error:', errorData)
+          throw new Error('Failed to fetch pinned repositories')
+        }
+
+        const data = await response.json()
+        console.log('GitHub API Response:', data)
+        setProjects(data.data.user.pinnedItems.nodes)
+        setLoading(false)
+      } catch (err: unknown) {
+        console.error('Error fetching pinned repositories:', err)
+        setError(err instanceof Error ? err.message : 'An unknown error occurred')
+        setLoading(false)
+      }
+    }
+
+    fetchPinnedRepos()
+  }, [])
+
+  if (loading) return <div>Loading projects...</div>
+  if (error) return <div>Error: {error}</div>
 
   return (
-    <section id="projects" className="py-20 bg-black">
+    <section id="projects" className="py-20 bg-gray-900">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -53,44 +85,25 @@ export const Projects = () => {
           className="max-w-6xl mx-auto"
         >
           <h2 className="text-4xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
-            Featured Projects
+            My Projects
           </h2>
-
           <div className="grid md:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
+            {projects.map((project) => (
               <motion.div
-                key={project.title}
+                key={project.name}
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                className="bg-gray-800 rounded-lg overflow-hidden"
+                transition={{ duration: 0.8 }}
+                className="bg-gray-800 p-6 rounded-lg shadow-lg"
               >
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2 text-white">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-400 mb-2 text-sm">{project.period}</p>
-                  <ul className="text-gray-300 mb-4 list-disc list-inside">
-                    {project.description.map((desc, i) => (
-                      <li key={i}>{desc}</li>
-                    ))}
-                  </ul>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-3 py-1 text-sm bg-gray-700 text-gray-300 rounded-full"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                <h3 className="text-2xl font-semibold mb-2 text-white">{project.name}</h3>
+                <p className="text-gray-300 mb-4">{project.description}</p>
+                <div className="flex justify-between items-center">
+                  <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">View on GitHub</a>
+                  <div className="flex space-x-4">
+                    <span className="text-gray-300">⭐ {project.stargazerCount}</span>
+                    <span className="text-gray-300">🍴 {project.forkCount}</span>
                   </div>
-                  <a
-                    href={project.link}
-                    className="inline-block px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
-                  >
-                    View Project
-                  </a>
                 </div>
               </motion.div>
             ))}
