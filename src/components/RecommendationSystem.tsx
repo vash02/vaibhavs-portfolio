@@ -16,6 +16,29 @@ interface ContentItem {
   stars?: number
 }
 
+interface GitHubRepo {
+  name: string
+  description: string
+  url: string
+  stargazerCount: number
+  repositoryTopics: {
+    nodes: {
+      topic: {
+        name: string
+      }
+    }[]
+  }
+  updatedAt: string
+}
+
+interface MediumItem {
+  title: string
+  description: string
+  link: string
+  categories: string[]
+  pubDate: string
+}
+
 // Default topics - will be replaced with actual content topics
 const defaultTopics = [
   "AI", "Machine Learning", "Deep Learning", "NLP", "LLM",
@@ -91,7 +114,7 @@ export const RecommendationSystem = () => {
         throw new Error(`GitHub API Error: ${data.errors[0].message}`)
       }
 
-      return data.data.user.pinnedItems.nodes.map((repo: { name: string; description: string; url: string; stargazerCount: number; repositoryTopics: { nodes: { topic: { name: string } }[] }; updatedAt: string }) => ({
+      return data.data.user.pinnedItems.nodes.map((repo: GitHubRepo) => ({
         id: `github-${repo.name}`,
         title: repo.name,
         description: repo.description || 'No description available',
@@ -126,7 +149,7 @@ export const RecommendationSystem = () => {
         throw new Error('Failed to parse Medium RSS feed')
       }
 
-      return data.items.map((item: { title: string; description: string; link: string; categories: string[]; pubDate: string }, index: number) => ({
+      return data.items.map((item: MediumItem, index: number) => ({
         id: `medium-${index}`,
         title: item.title,
         description: item.description.replace(/<[^>]*>/g, '').substring(0, 200) + '...',
