@@ -26,7 +26,7 @@ export default function Login() {
       } else {
         setError('Invalid credentials')
       }
-    } catch (err) {
+    } catch {
       setError('An error occurred. Please try again.')
     }
   }
