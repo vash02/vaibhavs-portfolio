@@ -25,7 +25,7 @@ export async function middleware(request: NextRequest) {
         new TextEncoder().encode(JWT_SECRET)
       )
       return NextResponse.next()
-    } catch (error) {
+    } catch {
       // Token is invalid or expired
       return NextResponse.redirect(new URL('/admin/login', request.url))
     }

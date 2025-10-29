@@ -91,7 +91,7 @@ export const RecommendationSystem = () => {
         throw new Error(`GitHub API Error: ${data.errors[0].message}`)
       }
 
-      return data.data.user.pinnedItems.nodes.map((repo: any) => ({
+      return data.data.user.pinnedItems.nodes.map((repo: { name: string; description: string; url: string; stargazerCount: number; repositoryTopics: { nodes: { topic: { name: string } }[] }; updatedAt: string }) => ({
         id: `github-${repo.name}`,
         title: repo.name,
         description: repo.description || 'No description available',
@@ -126,7 +126,7 @@ export const RecommendationSystem = () => {
         throw new Error('Failed to parse Medium RSS feed')
       }
 
-      return data.items.map((item: any, index: number) => ({
+      return data.items.map((item: { title: string; description: string; link: string; categories: string[]; pubDate: string }, index: number) => ({
         id: `medium-${index}`,
         title: item.title,
         description: item.description.replace(/<[^>]*>/g, '').substring(0, 200) + '...',
@@ -246,7 +246,7 @@ export const RecommendationSystem = () => {
           
           <div className="bg-gray-800 p-8 rounded-lg shadow-lg">
             <p className="text-gray-300 mb-6 text-center">
-              Select topics you're interested in, and I'll recommend relevant articles and projects from my portfolio.
+              Select topics you&apos;re interested in, and I&apos;ll recommend relevant articles and projects from my portfolio.
             </p>
             
             {loading && (

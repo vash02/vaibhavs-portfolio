@@ -8,7 +8,7 @@ const VISITORS_FILE = path.join(process.cwd(), 'visitor-data.json')
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'
 
 // Helper function to verify JWT token
-async function verifyToken(request: Request) {
+async function verifyToken() {
   try {
     const cookieStore = await cookies()
     const token = cookieStore.get('auth-token')?.value
@@ -22,9 +22,9 @@ async function verifyToken(request: Request) {
   }
 }
 
-export async function GET(request: Request) {
+export async function GET() {
   // Verify JWT token
-  if (!(await verifyToken(request))) {
+  if (!(await verifyToken())) {
     return new NextResponse(
       JSON.stringify({ error: 'Unauthorized' }),
       { status: 401, headers: { 'Content-Type': 'application/json' } }
@@ -41,7 +41,7 @@ export async function GET(request: Request) {
     
     const data = JSON.parse(fs.readFileSync(VISITORS_FILE, 'utf-8'))
     return NextResponse.json(data)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to read visitor data' })
   }
 }

@@ -61,7 +61,7 @@ export async function GET(request: Request) {
   try {
     const data = JSON.parse(fs.readFileSync(VISITORS_FILE, 'utf-8'))
     return NextResponse.json(data)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to read visitor data' })
   }
 } 
