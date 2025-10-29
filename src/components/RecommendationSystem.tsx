@@ -97,7 +97,7 @@ export const RecommendationSystem = () => {
         description: repo.description || 'No description available',
         url: repo.url,
         type: 'project' as const,
-        topics: repo.repositoryTopics.nodes.map((topic: any) => topic.topic.name),
+        topics: repo.repositoryTopics.nodes.map((topic: { topic: { name: string } }) => topic.topic.name),
         stars: repo.stargazerCount,
         publishedAt: repo.updatedAt
       }))

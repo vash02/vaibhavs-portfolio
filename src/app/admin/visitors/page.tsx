@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function VisitorStats() {
-  const [visitorData, setVisitorData] = useState<any>(null)
+  const [visitorData, setVisitorData] = useState<{ totalVisits: number; visitors: Array<{ timestamp: string; userAgent: string; referrer: string; ip: string }> } | null>(null)
   const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState(true)
   const router = useRouter()
@@ -18,7 +18,7 @@ export default function VisitorStats() {
         }
         const data = await response.json()
         setVisitorData(data)
-      } catch (err) {
+      } catch {
         setError('Failed to load visitor data')
       } finally {
         setLoading(false)
@@ -85,13 +85,13 @@ export default function VisitorStats() {
                 </tr>
               </thead>
               <tbody>
-                {visitorData?.visitors.slice().reverse().map((visitor: any, index: number) => (
+                {visitorData?.visitors.slice().reverse().map((visitor: { timestamp: string; userAgent: string; referrer: string; ip: string }, index: number) => (
                   <tr key={index} className="border-b border-gray-700">
                     <td className="py-4 text-gray-300">
                       {new Date(visitor.timestamp).toLocaleString()}
                     </td>
                     <td className="py-4 text-gray-300">
-                      {visitor.referer === 'direct' ? 'Direct Visit' : visitor.referer}
+                      {visitor.referrer === 'direct' ? 'Direct Visit' : visitor.referrer}
                     </td>
                     <td className="py-4 text-gray-300">
                       {visitor.userAgent}
