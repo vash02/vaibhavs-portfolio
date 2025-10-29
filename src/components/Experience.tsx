@@ -6,7 +6,7 @@ import { useInView } from 'react-intersection-observer'
 const experiences = [
   {
     title: 'Georgia Institute of Technology | Open-source AI Engineer',
-    company: 'Atlanta, GA',
+    company: 'Remote, USA',
     period: 'Sep 2025 – Present',
     description: [
       'Developing and maintaining open-source AI frameworks and tools for the research community.',
@@ -20,8 +20,8 @@ const experiences = [
     period: 'Apr 2025 – Aug 2025',
     description: [
       'Designed and implemented a Model Context Protocol (MCP) server, enabling AI agents to generate, execute, and reason over 1000+ scientific simulations.',
-      'Built a modular ML framework for executing simulation code, performing parameter sweeps, and storing structured results in a queryable DB.',
-      'Integrated vector database retrieval and tool-enabled agent workflows to support reasoning over experiments and dynamic exploration.',
+      'Built a modular framework for executing simulation code, performing parameter sweeps, and storing structured results in a queryable DB.',
+      'Integrated ReAct style tool-enabled agent workflows to support reasoning over experiments and dynamic exploration.',
       'Contributed framework to an Apache open-source project, expanding adoption in the AI/ML research and scientific computing community.'
     ],
   },

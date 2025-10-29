@@ -28,13 +28,19 @@ export const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="flex justify-center gap-4"
+          className="flex flex-wrap justify-center gap-4"
         >
           <a
             href="#projects"
             className="px-8 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
           >
             View Projects
+          </a>
+          <a
+            href="#recommendations"
+            className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105"
+          >
+            Content Recommendations
           </a>
           <a
             href="#contact"

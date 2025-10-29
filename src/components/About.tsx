@@ -25,7 +25,8 @@ export const About = () => {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="space-y-4">
               <p className="text-gray-300 text-lg">
-                I am a passionate Machine Learning Engineer and Software Developer with a strong foundation in AI/ML, big data, and scalable systems. I enjoy building intelligent solutions, exploring new technologies, and contributing to open-source projects. My work spans research, engineering, and deployment of ML systems at scale.
+                I am a Machine Learning Software Engineer with a strong skills in AI/ML and scalable backend systems. I enjoy building non trivial solutions, exploring new technologies, contributing to open-source projects, following latest research in the field. 
+                My work spans applied research, engineering, and deployment of ML systems at scale.
               </p>
               <div className="flex gap-4 mt-4">
                 <a href="https://github.com/vash02" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">GitHub</a>
@@ -36,7 +37,7 @@ export const About = () => {
             <div className="bg-gray-800 p-6 rounded-lg">
               <h3 className="text-xl font-semibold mb-4 text-white">Education</h3>
               <div className="mb-2">
-                <div className="font-bold text-white">MS, Data Science</div>
+                <div className="font-bold text-white">MS, Computer Science - Data Science</div>
                 <div className="text-gray-300">Indiana University Bloomington, USA</div>
                 <div className="text-gray-400 text-sm">GPA: 3.8/4.0</div>
                 <div className="text-gray-400 text-sm">Relevant Coursework: Applied Machine Learning, Data Mining, Statistics, Reinforcement Learning, Advanced Database Concepts, Applied NLP</div>
@@ -45,7 +46,7 @@ export const About = () => {
               <ul className="space-y-3">
                 <li className="flex items-center text-gray-300">
                   <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                  Passionate about AI/ML and Software Development
+                  3.5 years of experience in AI/ML and backend engineering
                 </li>
                 <li className="flex items-center text-gray-300">
                   <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
@@ -53,7 +54,7 @@ export const About = () => {
                 </li>
                 <li className="flex items-center text-gray-300">
                   <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                  Always learning and exploring new technologies
+                  Always learning and exploring new technologies & research
                 </li>
                 <li className="flex items-center text-gray-300">
                   <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>

@@ -23,12 +23,24 @@ export const Projects = () => {
 
   useEffect(() => {
     const fetchPinnedRepos = async () => {
+      // Try to get token from environment variables
+      const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN
+      
+      console.log('Environment token (first 10 chars):', token ? token.substring(0, 10) + '...' : 'undefined')
+      console.log('All env vars:', Object.keys(process.env).filter(key => key.includes('GITHUB')))
+      
+      if (!token || token === 'your-github-token-here') {
+        setError('GitHub integration not configured. Please add a valid NEXT_PUBLIC_GITHUB_TOKEN to your .env.local file.')
+        setLoading(false)
+        return
+      }
+
       try {
         const response = await fetch('https://api.github.com/graphql', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+            'Authorization': `Bearer ${token}`,
           },
           body: JSON.stringify({
             query: `
@@ -54,11 +66,18 @@ export const Projects = () => {
         if (!response.ok) {
           const errorData = await response.json()
           console.error('GitHub API Error:', errorData)
-          throw new Error('Failed to fetch pinned repositories')
+          console.error('Response status:', response.status)
+          console.error('Response headers:', Object.fromEntries(response.headers.entries()))
+          throw new Error(`GitHub API Error (${response.status}): ${errorData.message || errorData.error || 'Failed to fetch repositories'}`)
         }
 
         const data = await response.json()
         console.log('GitHub API Response:', data)
+        
+        if (data.errors) {
+          throw new Error(`GitHub API Error: ${data.errors[0].message}`)
+        }
+        
         setProjects(data.data.user.pinnedItems.nodes)
         setLoading(false)
       } catch (err: unknown) {
@@ -71,8 +90,38 @@ export const Projects = () => {
     fetchPinnedRepos()
   }, [])
 
-  if (loading) return <div>Loading projects...</div>
-  if (error) return <div>Error: {error}</div>
+  if (loading) {
+    return (
+      <section id="projects" className="py-20 bg-gray-900">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto text-center">
+            <h2 className="text-4xl font-bold mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
+              My Projects
+            </h2>
+            <div className="text-gray-300 text-lg">Loading projects from GitHub...</div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  if (error) {
+    return (
+      <section id="projects" className="py-20 bg-gray-900">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto text-center">
+            <h2 className="text-4xl font-bold mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
+              My Projects
+            </h2>
+            <div className="text-red-400 text-lg mb-4">Error: {error}</div>
+            <div className="text-gray-300 text-sm">
+              Make sure you have a valid GitHub token configured and have pinned repositories on your GitHub profile.
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section id="projects" className="py-20 bg-gray-900">
@@ -84,9 +133,17 @@ export const Projects = () => {
           transition={{ duration: 0.8 }}
           className="max-w-6xl mx-auto"
         >
-          <h2 className="text-4xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
-            My Projects
-          </h2>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
+              My Projects
+            </h2>
+            <a 
+              href="#recommendations" 
+              className="inline-block px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105"
+            >
+              Content Recommendations
+            </a>
+          </div>
           <div className="grid md:grid-cols-2 gap-8">
             {projects.map((project) => (
               <motion.div
