@@ -5,17 +5,28 @@ import { useInView } from 'react-intersection-observer'
 
 const experiences = [
   {
-    title: 'Google Summer of Code | Open-source AI Developer',
-    company: 'Remote, USA',
-    period: 'Apr 2025 – Present',
+    title: 'Georgia Institute of Technology | Open-source AI Engineer',
+    company: 'Atlanta, GA',
+    period: 'Sep 2025 – Present',
     description: [
-      'Building a research paper contributions reproduction, mapping and evaluation open-source tool using AI agents.',
-      'Leveraged retrieval pipelines and prompt chaining strategies to interpret and map research contributions to modular code components.',
-      'Worked on integrating multimodal inputs into LLM workflows for structured content understanding and alignment.'
+      'Developing and maintaining open-source AI frameworks and tools for the research community.',
+      'Collaborating with faculty and researchers on AI project focused on multi agent system for scientific experimentation.',
+      'Contributing to Apache Airavata open-source projects for a scientific MCP framework.'
     ],
   },
   {
-    title: 'Radical AI | AI Engineer',
+    title: 'Google Summer of Code (Apache) | Open-source AI Developer',
+    company: 'Remote, USA',
+    period: 'Apr 2025 – Aug 2025',
+    description: [
+      'Designed and implemented a Model Context Protocol (MCP) server, enabling AI agents to generate, execute, and reason over 1000+ scientific simulations.',
+      'Built a modular ML framework for executing simulation code, performing parameter sweeps, and storing structured results in a queryable DB.',
+      'Integrated vector database retrieval and tool-enabled agent workflows to support reasoning over experiments and dynamic exploration.',
+      'Contributed framework to an Apache open-source project, expanding adoption in the AI/ML research and scientific computing community.'
+    ],
+  },
+  {
+    title: 'Reality AI | AI Engineer',
     company: 'Remote, USA',
     period: 'Jun 2024 – Aug 2024',
     description: [
