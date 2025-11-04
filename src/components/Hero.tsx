@@ -18,7 +18,7 @@ export const Hero = () => {
           Vaibhav Sharma
         </h1>
         <h2 className="text-2xl md:text-3xl text-gray-300 mb-8">
-          Machine Learning Engineer & Software Developer
+          Machine Learning Engineer
         </h2>
         <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12">
           Building intelligent solutions and crafting elegant code to solve complex problems
